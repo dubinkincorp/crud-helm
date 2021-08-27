@@ -11,23 +11,10 @@ spec:
     metadata:
       labels:
         {{- include "crud-helm-chart.selectorLabels" . | nindent 8 }}
-      annotations:
-        checksum/config: {{ include (print $.Template.BasePath "/config.yaml") . | sha256sum }}
     spec:
       containers:
-        - name: {{ .Chart.Name }}
+        - name: crud-helm
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
           ports:
             - name: web
               containerPort: 80
-          env:
-            - name: DATABASE_URI
-              valueFrom:
-                secretKeyRef:
-                  name: crud-secret
-                  key: DATABASE_URI
-            - name: GREETING
-              valueFrom:
-                configMapRef:
-                  name: crud-config
-                  key: GREETING

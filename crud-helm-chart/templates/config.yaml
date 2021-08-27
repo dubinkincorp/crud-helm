@@ -12,4 +12,4 @@ metadata:
   name: crud-secret
 type: Opaque
 data:
-  DATABASE_URI: data:{{ printf "postgresql+psycopg2://%s:%s@%s:%s/%s" .Values.postgresql.postgresqlUsername .Values.postgresql.postgresqlPassword (include "postgresql.fullname" .) .Values.postgresql.service.port .Values.postgresql.postgresqlDatabase  | b64enc | quote }}
+  DATABASE_URI: {{ printf "postgres://%s:%s@%s:%s/%s" .Values.postgresql.postgresqlUsername .Values.postgresql.postgresqlPassword (include "postgresql.fullname" .) .Values.postgresql.service.port .Values.postgresql.postgresqlDatabase  | b64enc | quote }}

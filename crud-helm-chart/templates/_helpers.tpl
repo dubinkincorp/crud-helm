@@ -25,8 +25,7 @@ app.kubernetes.io/instance: {{ .Release.Name | quote }}
 {{- end -}}
 
 {{- define "crud-helm-chart.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "crud-helm-chart.name" . }}
-app.kubernetes.io/instance: {{ .Release.Name }}
+app: {{ include "crud-helm-chart.name" . }}
 {{- end -}}
 
 {{- define "crud-helm-chart.chart" -}}

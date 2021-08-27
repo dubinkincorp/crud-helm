@@ -6,12 +6,12 @@ import (
 )
 
 type User struct {
-	id int
-	userName string
+	id        int
+	userName  string
 	firstName string
-	lastName string
-	email string
-	phone string
+	lastName  string
+	email     string
+	phone     string
 }
 
 func instantiateUser(
@@ -50,7 +50,7 @@ func RetrieveById(id int, pool *pgxpool.Pool) (*User, error) {
 	}
 	defer conn.Release()
 
-	row =: conn.QueryRow("SELECT * FROM client WHERE id = $1", id)
+	row := conn.QueryRow(context.Background(), "SELECT * FROM client WHERE id = $1", id)
 
 	err = row.Scan(&userName, &firstName, &lastName, &email, &phone)
 	if err != nil {
@@ -95,5 +95,3 @@ func DeleteById(id int, pool *pgxpool.Pool) error {
 
 	return nil
 }
-
-

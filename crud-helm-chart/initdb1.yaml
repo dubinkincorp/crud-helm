@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: {{ include "crud-helm-chart.fullName" . }}
+  name: crud-helm-chart # has been generated wrong name
   annotations:
     "helm.sh/hook": post-install
     "helm.sh/hook-weight": "-5"
@@ -9,7 +9,7 @@ metadata:
 spec:
   template:
     metadata:
-      name: {{ include "crud-helm-chart.fullName" . }}
+      name: crud-helm-chart # has been generated wrong name
     spec:
       restartPolicy: Never
       initContainers:
@@ -17,9 +17,9 @@ spec:
           image: postgres:latest
           env:
             - name: POSTGRES_HOST
-              value: {{ include "postgresql.fullname" . | quote }}
+              value: "postgresql://myuser:passwd@crud-helm-chart-postgresql" # has been generated wrong wrong host
             - name: POSTGRES_PORT
-              value: {{ .Values.postgresql.service.port | quote }}
+              value: "5432"
           command:
             - sh
             - "-c"

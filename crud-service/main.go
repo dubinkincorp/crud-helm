@@ -1,4 +1,4 @@
-package main
+/*package main
 
 import (
 	"context"
@@ -23,7 +23,7 @@ func main() {
 		os.Exit(1)
 	}
 	//delayed function
-	defer pool.Close(context.Background())
+	defer pool.Close()
 
 	fmt.Println("Start server")
 
@@ -42,7 +42,7 @@ func main() {
 	http.ListenAndServe(":80", nil)
 }
 
-func openDbConnection() (*pgxpool.Conn, error) {
+func openDbConnection() (*pgxpool.Pool, error) {
 	const envDbUrl = "DATABASE_URI"
 
 	conn, err := pgxpool.Connect(context.Background(), os.Getenv(envDbUrl))
@@ -59,4 +59,36 @@ func errorBody() *[]byte {
 	}
 
 	return &js
+}*/
+
+package main
+
+import (
+	"encoding/json"
+	"fmt"
+	"net/http"
+)
+
+func main() {
+	fmt.Println("Start server")
+
+	http.HandleFunc("/health/", handler)
+	http.ListenAndServe(":80", nil)
+}
+
+type Status struct {
+	Status string
+}
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	status := Status{"OK"}
+
+	js, err := json.Marshal(status)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(js)
 }

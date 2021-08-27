@@ -1,7 +1,7 @@
 replicaCount: 2
 
 image:
-  repository: crud-service
+  repository: dubinkincorp/k8s
 
 service:
   type: NodePort
